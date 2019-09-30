@@ -14,10 +14,9 @@ class Booklist extends Component{
         }
     }
 render(){
-
+    let { read,wantToRead,currentlyReading , none} = false
     const {Books,Shelf} = this.props
-    const ShlefBooks = Shelf === '' ? Books : 
-        Books.filter((book) => (
+    const ShlefBooks = Books.filter((book) => (
             book.shelf.includes(Shelf)
         ))    
     return(
@@ -33,11 +32,25 @@ render(){
                 <select
                 onChange={(event) => this.handleChange(Book , event.target.value)}
                 >
-                    <option value="move" disabled>Move to...</option>
-                    <option value="currentlyReading">Currently Reading</option>
-                    <option value="wantToRead">Want to Read</option>
-                    <option value="read">Read</option>
-                    <option value="none">None</option>
+                {
+                   Book.shelf === "currentlyReading" ?
+                        currentlyReading = true : currentlyReading = false 
+                }{
+                   Book.shelf === "wantToRead" ?
+                        wantToRead = true : wantToRead = false
+                }{ 
+                   Book.shelf === "read" ?
+                        read = true : read = false
+                }{ 
+                   Book.shelf === "none" ?
+                        none = true : none = false
+                   
+                }
+                    <option  value="move" disabled>Move to...</option>
+                    <option selected={currentlyReading} value="currentlyReading">Currently Reading</option>
+                    <option selected={wantToRead} value="wantToRead">Want to Read</option>
+                    <option selected={read} value="read">Read</option>
+                    <option selected={none} value="none">None</option>
                 </select>
                 </div>
             </div>

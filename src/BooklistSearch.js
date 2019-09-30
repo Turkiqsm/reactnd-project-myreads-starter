@@ -10,17 +10,17 @@ class BooklistSearch extends Component{
     
     handleChange = (Book , value)=>{
         if(this.props.update(Book,value)){
-            this.props.update(Book , value)
+            this.props.update(Book, value)
         }
     }
 render(){
-
-    const {Books} = this.props  
+    let { read,wantToRead,currentlyReading , none} = false
+    const {Books} = this.props 
+    
     return(
 
         <ol className="books-grid">
         {Books.map((Book)=>(
-
         <li key={Book.id} >
             <div className="book">
             <div className="book-top">
@@ -28,12 +28,26 @@ render(){
                 <div className="book-shelf-changer">
                 <select
                 onChange={(event) => this.handleChange(Book , event.target.value)}
-                >
-                    <option value="move" disabled>Move to...</option>
-                    <option value="currentlyReading">Currently Reading</option>
-                    <option value="wantToRead">Want to Read</option>
-                    <option value="read">Read</option>
-                    <option value="none">None</option>
+                >    
+                {
+                   Book.shelf === "currentlyReading" ?
+                        currentlyReading = true : currentlyReading = false 
+                }{
+                   Book.shelf === "wantToRead" ?
+                        wantToRead = true : wantToRead = false
+                }{ 
+                   Book.shelf === "read" ?
+                        read = true : read = false
+                }{ 
+                   Book.shelf === "none" ?
+                        none = true : none = false
+                   
+                }            
+                    <option  value="move" disabled>Move to...</option>
+                    <option selected={currentlyReading} value="currentlyReading">Currently Reading</option>
+                    <option selected={wantToRead} value="wantToRead">Want to Read</option>
+                    <option selected={read} value="read">Read</option>
+                    <option selected={none} value="none">None</option>
                 </select>
                 </div>
             </div>
