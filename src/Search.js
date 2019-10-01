@@ -9,7 +9,6 @@ class Search extends Component{
         Books: [],
     }
     getBookShelf = (book) => {
-        console.log(this.props.myBooks)
         for(var i = 0; i < this.props.myBooks.length; i++ ) {
           if(book.id === this.props.myBooks[i].id) {
             return this.props.myBooks[i].shelf;
@@ -33,7 +32,6 @@ class Search extends Component{
         }))
         BooksAPI.search(query)
         .then((Books)=>{
-            console.log(Books)
           Books.map(book => book.shelf = this.getBookShelf(book));
           this.setState(()=>({
             Books
