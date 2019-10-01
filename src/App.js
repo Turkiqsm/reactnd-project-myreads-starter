@@ -16,6 +16,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     Books : [],
+    Updated: []
   }
 
   updateShelf = (book ,shelf)=>{
@@ -23,18 +24,23 @@ class BooksApp extends React.Component {
     BooksAPI.update(book,shelf)
     .then((Books)=>{
       this.setState(()=>({
-        Books
+        Updated : Books
       }) )
+      console.log("Updated")
+      this.getBooks()
     })
   }
+  getBooks (){
 
-  componentDidMount(){
     BooksAPI.getAll()
     .then((Books)=>{
       this.setState(()=>({
         Books
       }) )
     })
+  }
+  componentDidMount(){
+    this.getBooks()
   }
   render() {
     return (

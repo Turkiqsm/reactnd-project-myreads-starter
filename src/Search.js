@@ -7,6 +7,7 @@ class Search extends Component{
     state = {
         query: '',
         Books: [],
+        Updated: []
     }
     getBookShelf = (book) => {
         for(var i = 0; i < this.props.myBooks.length; i++ ) {
@@ -21,8 +22,9 @@ class Search extends Component{
         BooksAPI.update(book,shelf)
         .then((Books)=>{
           this.setState(()=>({
-            Books
+            Updated : Books
           }) )
+          console.log("Updated")
         })
       }
     updateQuery = (query) =>{
@@ -30,7 +32,7 @@ class Search extends Component{
 
             query: query.trim()
         }))
-        if(query !== ''){
+        if(query.trim() !== ''){
 
           BooksAPI.search(query)
           .then((Books)=>{
@@ -80,7 +82,6 @@ class Search extends Component{
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-              {console.log(this.state.Books)}
               <BooklistSearch
               Books={this.state.Books}
               update = {(book , shelf) =>{

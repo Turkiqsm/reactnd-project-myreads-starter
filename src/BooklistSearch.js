@@ -16,7 +16,6 @@ class BooklistSearch extends Component{
 render(){
     let { read,wantToRead,currentlyReading , none} = false
     const {Books} = this.props 
-    console.log(Books)
     return(
 
         <ol className="books-grid">
