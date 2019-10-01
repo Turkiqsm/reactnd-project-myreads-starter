@@ -30,13 +30,25 @@ class Search extends Component{
 
             query: query.trim()
         }))
-        BooksAPI.search(query)
-        .then((Books)=>{
-          Books.map(book => book.shelf = this.getBookShelf(book));
+        if(query !== ''){
+
+          BooksAPI.search(query)
+          .then((Books)=>{
+            if(Books){
+              Books.forEach(book => {
+                book.shelf = this.getBookShelf(book)
+              });
+            }
+            this.setState(()=>({
+              Books
+            }) )
+          })
+        }else{
           this.setState(()=>({
-            Books
+            Books: []
           }) )
-        })
+
+        }
     }
     render(){
         const {query} = this.state
@@ -62,13 +74,13 @@ class Search extends Component{
                 placeholder="Search by title or author"
                 value={query}
                 onChange={(event) => this.updateQuery(event.target.value)}
-
                 />
 
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
+              {console.log(this.state.Books)}
               <BooklistSearch
               Books={this.state.Books}
               update = {(book , shelf) =>{
